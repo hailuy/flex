@@ -1,0 +1,13 @@
+
+# created by joseph.burke@ul.ie
+# type "make -f basicmakefile" at the terminal to run
+
+
+all: compile clean
+
+compile:
+	flex lexer.l
+	gcc lex.yy.c -o myproject.out
+
+clean:
+	rm -rf lex.yy.c

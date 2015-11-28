@@ -1,0 +1,34 @@
+
+# created by joseph.burke@ul.ie
+# type "make -f fancymakefile" at the terminal to run
+
+# Change these to match your file names
+COMPILER=gcc
+FLEXFILE=lexer.l
+BISONFILE=parser.y
+OUTPUT=myproject.out
+
+
+# you shouldnt need to change this section of the makefile
+all: compile clean
+
+
+compile: parser lexer
+	$(COMPILER) lexer.yy.c parser.tab.c -o $(OUTPUT) -lfl
+
+
+# outputs parser.tab.h, parser.tab.c
+# include parser.tab.h in the flex scanner
+parser: $(BISONFILE)
+	bison -d $(BISONFILE) -o parser.tab.c
+
+
+# outputs lexer.yy.c
+lexer: $(FLEXFILE)
+	flex -o lexer.yy.c $(FLEXFILE)
+
+
+clean:
+	rm -rf lexer.yy.c parser.tab.c parser.tab.h
+
+
